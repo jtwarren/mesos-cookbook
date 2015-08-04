@@ -26,7 +26,7 @@ Currently this cookbook defaults to build mesos from source, i.e.
 Install mesos using `source` recipe or `mesosphere` recipe, depending
 on what the `node[:et_mesos][:type]` attribute is set to (`source` or `mesosphere`).
 
-### mesos::build\_from\_source
+### mesos::source
 
 Install mesos (download zip from [github](https://github.com/apache/mesos), configure, make, make install).
 
