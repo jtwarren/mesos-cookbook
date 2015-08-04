@@ -4,6 +4,8 @@ Install Mesos (<http://mesos.apache.org/>) and configure mesos master and slave.
 This cookbook also supports installation by both bulding from source and with [Mesosphere](http://mesosphere.io) package.
 You can switch installation type using the `node[:et_mesos][:type]` attribute (`source` or `mesosphere`).
 
+All credit to @everpeace for the basis for this cookbook, [everpeace/cookbook-mesos](https://github.com/everpeace/cookbook-mesos).
+
 ## Platform
 
 Currently only supports `ubuntu` and `centos`. But `centos` support is  experimental.
