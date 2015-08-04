@@ -16,10 +16,10 @@ describe 'mesos::default' do
     end
   end
 
-  context 'when node[:mesos][:type] is neither `source` nor `mesosphere`' do
+  context 'when node[:et_mesos][:type] is neither `source` nor `mesosphere`' do
     let :chef_run do
       ChefSpec::ServerRunner.new do |node|
-        node.set[:mesos][:type] = 'bork'
+        node.set[:et_mesos][:type] = 'bork'
       end.converge described_recipe
     end
 
@@ -53,10 +53,10 @@ describe 'mesos::default' do
     end
   end
 
-  context 'when attribute [:mesos][:type] == mesosphere' do
+  context 'when attribute [:et_mesos][:type] == mesosphere' do
     let :chef_run do
       ChefSpec::ServerRunner.new do |node|
-        node.set[:mesos][:type] = 'mesosphere'
+        node.set[:et_mesos][:type] = 'mesosphere'
       end.converge described_recipe
     end
 

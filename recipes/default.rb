@@ -9,7 +9,7 @@ unless %w(ubuntu centos).include? node["platform"]
 end
 
 # Fail early if an unsupported install type is specified
-unless %w(source mesosphere).include? node[:mesos][:type]
+unless %w(source mesosphere).include? node[:et_mesos][:type]
   fail "node['mesos']['type'] should be 'source' or 'mesosphere'."
 end
 
@@ -21,4 +21,4 @@ when "ubuntu"
 end
 
 include_recipe "java"
-include_recipe "mesos::#{node[:mesos][:type]}"
+include_recipe "mesos::#{node[:et_mesos][:type]}"

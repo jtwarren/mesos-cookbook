@@ -36,10 +36,10 @@ describe 'mesos::mesosphere' do
     end
   end
 
-  context 'when node[:mesos][:mesosphere][:with_zookeeper] = true, on any platform' do
+  context 'when node[:et_mesos][:mesosphere][:with_zookeeper] = true, on any platform' do
     let :chef_run do
       ChefSpec::ServerRunner.new do |node|
-        node.set[:mesos][:mesosphere][:with_zookeeper] = true
+        node.set[:et_mesos][:mesosphere][:with_zookeeper] = true
       end.converge described_recipe
     end
 
@@ -67,10 +67,10 @@ describe 'mesos::mesosphere' do
     end
   end
 
-  context 'when node[:mesos][:version] == 0.22.1, on Ubuntu 14.04' do
+  context 'when node[:et_mesos][:version] == 0.22.1, on Ubuntu 14.04' do
     let :chef_run do
       ChefSpec::ServerRunner.new do |node|
-        node.set[:mesos][:version] = '0.22.1'
+        node.set[:et_mesos][:version] = '0.22.1'
       end.converge described_recipe
     end
 

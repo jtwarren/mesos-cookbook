@@ -3,7 +3,7 @@
 # Recipe:: docker-executor
 #
 
-version = node[:mesos][:version]
+version = node[:et_mesos][:version]
 platform_version = node['platform_version']
 
 # tricks for "0.19.0" only.

@@ -1,4 +1,4 @@
-default[:mesos] = {
+default[:et_mesos] = {
   :type    => "source",
   :mesosphere => {
     :with_zookeeper => false
@@ -25,9 +25,9 @@ default[:mesos] = {
   :deploy_with_sudo => "1"
 }
 
-default[:mesos][:deploy_dir] = "#{node[:mesos][:prefix]}/var/mesos/deploy"
+default[:et_mesos][:deploy_dir] = "#{node[:et_mesos][:prefix]}/var/mesos/deploy"
 
-default[:mesos][:slave][:cgroups_hierarchy] = value_for_platform(
+default[:et_mesos][:slave][:cgroups_hierarchy] = value_for_platform(
   "centos" => {
     "default" => "/cgroup"
   },

@@ -3,8 +3,8 @@
 # supported as a command-line option is also supported as an environment
 # variable.
 
-<% if node[:mesos][:master] %>
-  <% node[:mesos][:master].each do |key, val| %>
+<% if node[:et_mesos][:master] %>
+  <% node[:et_mesos][:master].each do |key, val| %>
     <% if val.respond_to?(:to_path_hash) -%>
       <% val.to_path_hash('_').each do |path_h| -%>
 export MESOS_<%= key %>_<%= path_h[:path] %>=<%= path_h[:content] %>

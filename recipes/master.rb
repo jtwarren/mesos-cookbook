@@ -11,28 +11,28 @@ service "mesos-master" do
   action :nothing
 end
 
-deploy_dir = node[:mesos][:deploy_dir]
+deploy_dir = node[:et_mesos][:deploy_dir]
 
 directory deploy_dir do
   recursive true
 end
 
 # for backwards compatibility
-if node[:mesos][:cluster_name]
-  if node[:mesos][:master][:cluster]
-    Chef::Log.info 'node[:mesos][:cluster_name] is obsolete. node[:mesos][:cluster_name] will be ignored because you have node[:mesos][:master][:cluster].'
+if node[:et_mesos][:cluster_name]
+  if node[:et_mesos][:master][:cluster]
+    Chef::Log.info 'node[:et_mesos][:cluster_name] is obsolete. node[:et_mesos][:cluster_name] will be ignored because you have node[:et_mesos][:master][:cluster].'
   else
-    Chef::Log.info 'node[:mesos][:cluster_name] is obsolete. use node[:mesos][:master][:cluster] instead.'
-    node.default[:mesos][:master][:cluster] = node[:mesos][:cluster_name]
+    Chef::Log.info 'node[:et_mesos][:cluster_name] is obsolete. use node[:et_mesos][:master][:cluster] instead.'
+    node.default[:et_mesos][:master][:cluster] = node[:et_mesos][:cluster_name]
   end
 end
 
-unless node[:mesos][:master][:zk]
-  fail 'node[:mesos][:master][:zk] is required to configure mesos-master.'
+unless node[:et_mesos][:master][:zk]
+  fail 'node[:et_mesos][:master][:zk] is required to configure mesos-master.'
 end
 
-unless node[:mesos][:master][:quorum]
-  fail 'node[:mesos][:master][:quorum] is required to configure mesos-master.'
+unless node[:et_mesos][:master][:quorum]
+  fail 'node[:et_mesos][:master][:quorum] is required to configure mesos-master.'
 end
 
 # configuration files for mesos-[start|stop]-cluster.sh provided
@@ -50,33 +50,33 @@ template "#{deploy_dir}/mesos-master-env.sh" do
 end
 
 template "/etc/init/mesos-master.conf" do
-  source "upstart.conf.for.#{node[:mesos][:type]}.erb"
+  source "upstart.conf.for.#{node[:et_mesos][:type]}.erb"
   variables :init_state => "start", :role => "master"
   notifies :reload, "service[mesos-master]"
 end
 
 # configuration files for service scripts(mesos-init-wrapper) by mesosphere package.
-if node[:mesos][:type] == 'mesosphere'
+if node[:et_mesos][:type] == 'mesosphere'
   # these template resources don't notify service resource because
   # changes of configuration can be detected in mesos-master-env.sh
   template "/etc/mesos/zk" do
     source "etc-mesos-zk.erb"
     variables(
-      :zk => node[:mesos][:master][:zk]
+      :zk => node[:et_mesos][:master][:zk]
     )
   end
 
   template "/etc/default/mesos" do
     source "etc-default-mesos.erb"
     variables(
-      :log_dir => node[:mesos][:master][:log_dir]
+      :log_dir => node[:et_mesos][:master][:log_dir]
     )
   end
 
   template "/etc/default/mesos-master" do
     source "etc-default-mesos-master.erb"
     variables(
-      :port => node[:mesos][:master][:port]
+      :port => node[:et_mesos][:master][:port]
     )
   end
 
@@ -87,7 +87,7 @@ if node[:mesos][:type] == 'mesosphere'
   # TODO Refactor this to be idempotent, or have a guard - jeffbyrnes
   execute "rm -rf /etc/mesos-master/*"
 
-  node[:mesos][:master].each do |key, val|
+  node[:et_mesos][:master].each do |key, val|
     next if %w(zk log_dir port).include? key
     next if val.nil?
     if val.respond_to? :to_path_hash

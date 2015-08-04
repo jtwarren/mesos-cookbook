@@ -3,7 +3,7 @@
 # Recipe:: mesosphere
 #
 
-include_recipe 'mesos::zookeeper' if node[:mesos][:mesosphere][:with_zookeeper]
+include_recipe 'mesos::zookeeper' if node[:et_mesos][:mesosphere][:with_zookeeper]
 
 case node['platform']
 when "centos"
@@ -37,7 +37,7 @@ when "centos"
     end
   end
 
-  yum_package "mesos >= #{node[:mesos][:version]}"
+  yum_package "mesos >= #{node[:et_mesos][:version]}"
 when 'ubuntu'
   apt_repository 'mesosphere' do
     uri "http://repos.mesosphere.com/#{node['platform']}"
@@ -47,6 +47,6 @@ when 'ubuntu'
   end
 
   package "mesos" do
-    version "#{node[:mesos][:version]}-1.0.#{node['platform']}#{node['platform_version'].sub '.', ''}"
+    version "#{node[:et_mesos][:version]}-1.0.#{node['platform']}#{node['platform_version'].sub '.', ''}"
   end
 end

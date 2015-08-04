@@ -1,29 +1,28 @@
-# Mesos Cookbook [![Build Status](https://travis-ci.org/everpeace/cookbook-mesos.png?branch=master)](https://travis-ci.org/everpeace/cookbook-mesos)  [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/everpeace/cookbook-mesos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
+# Mesos Cookbook [![Build Status](https://travis-ci.org/evertrue/mesos-cookbook.png?branch=master)](https://travis-ci.org/evertrue/mesos-cookbook)
 
 Install Mesos (<http://mesos.apache.org/>) and configure mesos master and slave.
 This cookbook also supports installation by both bulding from source and with [Mesosphere](http://mesosphere.io) package.
-You can switch installation type using the `node[:mesos][:type]` attribute (`source` or `mesosphere`).
+You can switch installation type using the `node[:et_mesos][:type]` attribute (`source` or `mesosphere`).
 
 ## Platform
 
-Currently only supports `ubuntu` and `centos`.  But `centos` support is  experimental.
+Currently only supports `ubuntu` and `centos`. But `centos` support is  experimental.
 
-If you would use `cgroups` isolator or `docker` containerizer, version 14.04 is highly recommended. Note that `docker` containerizer is only supported by Mesos 0.20.0+.
+If you would use `cgroups` isolator or `docker` containerizer, Ubuntu 14.04 is highly recommended. Note that `docker` containerizer is only supported by Mesos 0.20.0+.
 
 ## Installation Type
 
-You have to specify intallation type (`source` or `mesosphere`) by setting `node[:mesos][:type]` variable.
+You have to specify intallation type (`source` or `mesosphere`) by setting `node[:et_mesos][:type]` variable.
 
 Currently this cookbook defaults to build mesos from source, i.e.
-`node[:mesos][:type]` is set to `source`.
+`node[:et_mesos][:type]` is set to `source`.
 
 ## Recipes
 
 ### mesos::default
 
 Install mesos using `source` recipe or `mesosphere` recipe, depending
-on what the `node[:mesos][:type]` attribute is set to (`source` or `mesosphere`).
+on what the `node[:et_mesos][:type]` attribute is set to (`source` or `mesosphere`).
 
 ### mesos::build\_from\_source
 
@@ -32,19 +31,19 @@ Install mesos (download zip from [github](https://github.com/apache/mesos), conf
 ### mesos::mesosphere
 
 Install mesos using Mesosphere's mesos package.
-You can also install zookeeper package by `node[:mesos][:mesosphere][:with_zookeeper]` if required because Mesosphere's mesos package doesn't include zookeeper.
+You can also install zookeeper package by `node[:et_mesos][:mesosphere][:with_zookeeper]` if required because Mesosphere's mesos package doesn't include zookeeper.
 
 ### mesos::master
 
 Configure master and cluster deployment configuration files, and start
 `mesos-master`.
 
-* `node[:mesos][:prefix]/var/mesos/deploy/masters`
-* `node[:mesos][:prefix]/var/mesos/deploy/slaves`
-* `node[:mesos][:prefix]/var/mesos/deploy/mesos-deploy-env.sh`
-* `node[:mesos][:prefix]/var/mesos/deploy/mesos-master-env.sh`
+* `node[:et_mesos][:prefix]/var/mesos/deploy/masters`
+* `node[:et_mesos][:prefix]/var/mesos/deploy/slaves`
+* `node[:et_mesos][:prefix]/var/mesos/deploy/mesos-deploy-env.sh`
+* `node[:et_mesos][:prefix]/var/mesos/deploy/mesos-master-env.sh`
 
-If you choose `mesosphere` as `node[:mesos][:type]`, the `node[:mesos][:prefix]` attribute
+If you choose `mesosphere` as `node[:et_mesos][:type]`, the `node[:et_mesos][:prefix]` attribute
 will be overridden to `/usr/local`, which is because the package from Mesosphere
 installs mesos into that directory.
 
@@ -56,17 +55,17 @@ Furthermore, this recipe will also configure upstart configuration files.
 
 #### How to configure `mesos-master`
 
-You can configure `mesos-master` command line options using the `node[:mesos][:master]` attribute.
+You can configure `mesos-master` command line options using the `node[:et_mesos][:master]` attribute.
 
 If you have a configuration as shown below:
 
 ```
-node[:mesos][:master] = {
-  :port    => "5050",
-  :log_dir => "/var/log/mesos",
-  :zk      => "zk://localhost:2181/mesos",
-  :cluster => "MyCluster",
-  :quorum  => "1"
+node[:et_mesos][:master] = {
+  port:    "5050",
+  log_dir: "/var/log/mesos",
+  zk:      "zk://localhost:2181/mesos",
+  cluster: "MyCluster",
+  quorum:  "1"
 }
 ```
 
@@ -76,15 +75,15 @@ Then `mesos-master` will be invoked with command line options like this:
 mesos-master --zk=zk://localhost:2181/mesos --port=5050 --log_dir=/var/log/mesos --cluster=MyCluster
 ```
 
-See [here](http://mesos.apache.org/documentation/latest/configuration/) for available options or the output of `mesos-master --help`.
+See the [latest Mesos config docs](http://mesos.apache.org/documentation/latest/configuration/) for available options or the output of `mesos-master --help`.
 
 ### mesos::slave
 
 Configure slave configuration files, and start `mesos-slave`.
 
-* `node[:mesos][:prefix]/var/mesos/deploy/mesos-slave-env.sh`
+* `node[:et_mesos][:prefix]/var/mesos/deploy/mesos-slave-env.sh`
 
-If you choose `mesosphere` as `node[:mesos][:type]`, the `node[:mesos][:prefix]` attribute
+If you choose `mesosphere` as `node[:et_mesos][:type]`, the `node[:et_mesos][:prefix]` attribute
 will be overridden to `/usr/local`, which is because the package from Mesosphere
 installs mesos into that directory by default.
 
@@ -96,16 +95,16 @@ Furthermore, this recipe also configures upstart configuration files.
 
 #### How to configure `mesos-slave`
 
-You can configure `mesos-slave` command line options by `node[:mesos][:slave]` hash.
+You can configure `mesos-slave` command line options by `node[:et_mesos][:slave]` hash.
 If you have a configuration as shown below:
 
 ```
-node[:mesos][:slave] = {
-  :master    => "zk://localhost:2181/mesos",
-  :log_dir   => "/var/log/mesos",
-  :containerizers => "docker,mesos",
-  :isolation => "cgroups/cpu,cgroups/mem",
-  :work_dir  => "/var/run/work"
+node[:et_mesos][:slave] = {
+  master:         'zk://localhost:2181/mesos',
+  log_dir:        '/var/log/mesos',
+  containerizers: 'docker,mesos',
+  isolation:      'cgroups/cpu,cgroups/mem',
+  work_dir:       '/var/run/work'
 }
 ```
 
@@ -115,7 +114,7 @@ Then `mesos-slave` will be invoked with command line options like this:
 mesos-slave --master=zk://localhost:2181/mesos --log_dir=/var/log/mesos --containerizers=docker,mesos --isolation=cgroups/cpu,cgroups/mem --work_dir=/var/run/work
 ```
 
-See [here](http://mesos.apache.org/documentation/latest/configuration/) for available options or the output of `mesos-slave --help`.
+See the [latest Mesos config docs](http://mesos.apache.org/documentation/latest/configuration/) for available options or the output of `mesos-slave --help`.
 
 ### [Deprecated] mesos::docker-executor
 
@@ -124,205 +123,137 @@ Currently only Mesos 0.14.0 is supported.
 
 __NOTE__: This cookbook DOES NOT install `docker` automatically.
 So, you need to install docker manually.
-See [./example/mesosphere/Vagrantfile](https://github.com/everpeace/cookbook-mesos/tree/master/example/mesosphere/Vagrantfile)
 
 ## Usage
 
-Please see below:
+Wrap this cookbook, setting the `node[:et_mesos][:type]` attribute as appropriate for your installation, and `include_recipe 'mesos::master'` or `include_recipe 'mesos::slave'`, depending on what part of the cluster you need to provision.
 
-* [everpeace/vagrant-mesos](https://github.com/everpeace/vagrant-mesos)
-* [./example/source](https://github.com/everpeace/cookbook-mesos/tree/master/example/source/)
-* [./example/mesosphere](https://github.com/everpeace/cookbook-mesos/tree/master/example/mesosphere/)
+The recommendation would be to have two wrapper cookbooks, one for the master(s), and another for your slave(s).
 
 ## Attributes
 
-### mesos::default
-
 <table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:type]</tt></td>
-    <td>String</td>
-    <td>installation type(<tt>source</tt> or <tt>mesosphere</tt>)</td>
-    <td><tt>source</tt></td>
-  </tr>
-</table>
-
-### mesos::build\_from\_source
-
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:version]</tt></td>
-    <td>String</td>
-    <td>Version(branch or tag name at http://github.com/apache/mesos).</td>
-    <td><tt>0.22.1</tt></td>
-  </tr>
-  <tr>
-  <td><tt>[:mesos][:prefix]</tt></td>
-  <td>String</td>
-  <td>Prefix value to be passed to configure script</td>
-  <td><tt>/usr/local</tt></td>
-  </tr>
-  <tr>
-  <td><tt>[:mesos][:home]</tt></td>
-  <td>String</td>
-  <td>Directory which mesos sources are extracted to(<tt>node[:mesos][:home]/mesos</tt>).</td>
-  <td><tt>/opt</tt></td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:build][:skip_test]</tt></td>
-    <td>Boolean</td>
-    <td>Flag whether test will be performed.</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
-
-### mesos::mesosphere
-
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:version]</tt></td>
-    <td>String</td>
-    <td>Version.(see http://mesosphere.io/downloads/)</td>
-    <td><tt>0.22.1</tt></td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:mesosphere][:with_zookeeper]</tt></td>
-    <td>String</td>
-    <td>flag for installing zookeeper package</td>
-    <td><tt>false</tt></td>
-  </tr>
-</table>
-
-### mesos::master
-
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:prefix]</tt></td>
-    <td>String</td>
-    <td> Prefix value to be passed to configure script.  This value will be overridden by <tt>/usr/local</tt> when you choose <tt>mesosphere</tt>.</td>
-    <td><tt>/usr/local</tt><br/></td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:ssh_opt]</tt></td>
-    <td>String</td>
-    <td>ssh options to be used in <tt>mesos-[start|stop]-cluster</tt></td>
-    <td><tt>-o StrictHostKeyChecking=no <br/> -o ConnectTimeout=2</tt></td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:deploy_with_sudo]</tt></td>
-    <td>String</td>
-    <td>Flag whether sudo will be used in <tt>mesos-[start|stop]-cluster</tt></td>
-    <td><tt>1</tt></td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:cluster_name]</tt></td>
-    <td>String</td>
-    <td>[OBSOLETE] Human readable name for the cluster, displayed at webui. </td>
-    <td><tt>MyCluster</tt></td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:mater_ips]</tt></td>
-    <td>Array of String</td>
-    <td>IP list of masters used in <tt>mesos-[start|stop]-cluster</tt></td>
-    <td>[ ]</td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:slave_ips]</tt></td>
-    <td>Array of String</td>
-    <td>IP list of slaves used in <tt>mesos-[start|stop]-cluster</tt></td>
-    <td>[ ]</td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:master][:zk]</tt></td>
-    <td>String</td>
-    <td>[REQUIRED(0.19.1+)] ZooKeeper URL (used for leader election amongst masters). May be one of:<br/>                                             zk://host1:port1,host2:port2,.../path<br/>
- zk://username:password@host1:port1,host2:port2,.../path<br />
- file://path/to/file (where file contains one of the above)</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:master][:work_dir]</tt></td>
-    <td>String</td>
-    <td>[REQUIRED(0.19.1+)] Where to store the persistent information stored in the Registry.</td>
-    <td><tt>/tmp/mesos</tt></td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:master][:quorum]</tt></td>
-    <td>String</td>
-    <td>[REQUIRED(0.19.1+)] The size of the quorum of replicas when using 'replicated_log' based
-                                           registry. It is imperative to set this value to be a majority of
-                                           masters i.e., quorum > (number of masters)/2.</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:master][:&lt;option_name&gt;]</tt></td>
-    <td>String</td>
-    <td>You can set arbitrary command line option for <tt>mesos-master</tt>. See [here](http://mesos.apache.org/documentation/latest/configuration/) for available options or the output of `mesos-master --help`.</td>
-    <td></td>
-  </tr>
-</table>
-
-### mesos::slave
-
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:prefix]</tt></td>
-    <td>String</td>
-    <td>Prefix value to be passed to configure script.  This value will be overridden by <tt>/usr/local</tt> when you choose <tt>mesosphere</tt>.</td>
-    <td><tt>/usr/local</tt></td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:slave][:master]</tt></td>
-    <td>String</td>
-    <td>[REQUIRED] mesos master url.This should be ip:port for non-ZooKeeper based masters, otherwise a zk:// . when <tt>mesosphere</tt>, you should set zk:// address. </td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><tt>[:mesos][:slave][:&lt;option_name&gt;]</tt></td>
-    <td>String</td>
-    <td>You can set arbitrary command line option for <tt>mesos-slave</tt>. See [here](http://mesos.apache.org/documentation/latest/configuration/) for available options or the output of `mesos-slave --help`.</td>
-    <td></td>
-  </tr>
+    <tr>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:type]</tt></td>
+        <td>String</td>
+        <td>installation type(<tt>source</tt> or <tt>mesosphere</tt>)</td>
+        <td><tt>source</tt></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:version]</tt></td>
+        <td>String</td>
+        <td>Version(branch or tag name at <a href="http://github.com/apache/mesos">http://github.com/apache/mesos</a>).</td>
+        <td><tt>0.22.1</tt></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:prefix]</tt></td>
+        <td>String</td>
+        <td>Prefix value to be passed to configure script.  This value will be overridden by <tt>/usr/local</tt> if <tt>node[:et_mesos][:type] == mesosphere</tt>.</td>
+        <td><tt>/usr/local</tt></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:home]</tt></td>
+        <td>String</td>
+        <td>Directory which mesos sources are extracted to(<tt>node[:et_mesos][:home]/mesos</tt>).</td>
+        <td><tt>/opt</tt></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:build][:skip_test]</tt></td>
+        <td>Boolean</td>
+        <td>Flag whether test will be performed on the build before installing.</td>
+        <td><tt>true</tt></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:mesosphere][:with_zookeeper]</tt></td>
+        <td>String</td>
+        <td>Flag for installing zookeeper package, only applies to <tt>[:et_mesos][:type] = mesosphere</tt>.</td>
+        <td><tt>false</tt></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:ssh_opt]</tt></td>
+        <td>String</td>
+        <td>ssh options to be used in <tt>mesos-[start|stop]-cluster</tt></td>
+        <td><tt>-o StrictHostKeyChecking=no <br> -o ConnectTimeout=2</tt></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:deploy_with_sudo]</tt></td>
+        <td>String</td>
+        <td>Flag whether sudo will be used in <tt>mesos-[start|stop]-cluster</tt></td>
+        <td><tt>1</tt></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:cluster_name]</tt></td>
+        <td>String</td>
+        <td>[OBSOLETE] Human readable name for the cluster, displayed at webui. </td>
+        <td><tt>MyCluster</tt></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:master_ips]</tt></td>
+        <td>Array of String</td>
+        <td>IP list of masters used in <tt>mesos-[start|stop]-cluster</tt></td>
+        <td>[ ]</td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:slave_ips]</tt></td>
+        <td>Array of String</td>
+        <td>IP list of slaves used in <tt>mesos-[start|stop]-cluster</tt></td>
+        <td>[ ]</td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:master][:zk]</tt></td>
+        <td>String</td>
+        <td>[REQUIRED(0.19.1+)] ZooKeeper URL (used for leader election amongst masters). May be one of:<br>
+        zk://host1:port1,host2:port2,…path<br>
+        zk://username:password@host1:port1,host2:port2,…/path<br>
+        file://path/to/file (where file contains one of the above)</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:master][:work_dir]</tt></td>
+        <td>String</td>
+        <td>[REQUIRED(0.19.1+)] Where to store the persistent information stored in the Registry.</td>
+        <td><tt>/tmp/mesos</tt></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:master][:quorum]</tt></td>
+        <td>String</td>
+        <td>[REQUIRED(0.19.1+)] The size of the quorum of replicas when using “replicated_log” based registry. It is imperative to set this value to be a majority of masters, i.e., quorum > (number of masters) / 2.</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:master][:option_name]</tt></td>
+        <td>String</td>
+        <td>You can set arbitrary command line option for <tt>mesos-master</tt>, replace `option_name` with the key for the option to set. See the <a href="http://mesos.apache.org/documentation/latest/configuration/">latest Mesos config docs</a> for available options, or the output of `mesos-master --help`.</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:slave][:master]</tt></td>
+        <td>String</td>
+        <td>[REQUIRED] mesos master url.This should be ip:port for non-ZooKeeper based masters, otherwise a zk:// . when <tt>mesosphere</tt>, you should set zk:// address. </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><tt>[:et_mesos][:slave][:option_name]</tt></td>
+        <td>String</td>
+        <td>Like <tt>[:et_mesos][:master][:option_name]</tt> above, arbitrary options may be specified as a key for a slave by replacing `option_name` with your option’s key.</td>
+        <td></td>
+    </tr>
 </table>
 
 ## Testing
 
-There are a couple of test suites
+There are a couple of test suites in place:
 
 * `chefspec` for unit tests.
 * `test-kitchen` with `serverspec` for integration tests (using `vagrant`).
 
-in place, which tests both source and mesosphere installations (as well as master and slave recipes).
+These test both `source` and `mesosphere` type installations (using both the `master` and `slave` recipes).
 
 ## Contributing
 
@@ -334,6 +265,7 @@ in place, which tests both source and mesosphere installations (as well as maste
 6. Submit a Pull Request using Github
 
 ## License
+
 MIT License.  see [LICENSE.txt](LICENSE.txt)
 
-(Please note that before 2015-02-06-18:00 PST, this project is opened under Apache License, Version 2.0. See also [README.md in old version](https://github.com/everpeace/cookbook-mesos/blob/b9e660382affaba7c3906367fbd135e0de49de02/README.md#license))
+(Please note that before 2015-02-06-18:00 PST, this project is opened under Apache License, Version 2.0. See also [README.md in old version](https://github.com/evertrue/mesos-cookbook/blob/b9e660382affaba7c3906367fbd135e0de49de02/README.md#license))

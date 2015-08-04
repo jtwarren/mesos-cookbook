@@ -1,6 +1,6 @@
-name             'mesos'
-maintainer       'Shingo Omura'
-maintainer_email 'everpeace@gmail.com'
+name             'et_mesos'
+maintainer       'EverTrue'
+maintainer_email 'devops@evertrue.com'
 license          'MIT'
 description      'Installs/Configures mesos'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
