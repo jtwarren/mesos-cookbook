@@ -3,7 +3,7 @@
 # Recipe:: mesosphere
 #
 
-include_recipe 'mesos::zookeeper' if node[:et_mesos][:mesosphere][:with_zookeeper]
+include_recipe 'et_mesos::zookeeper' if node[:et_mesos][:mesosphere][:with_zookeeper]
 
 case node['platform']
 when "centos"

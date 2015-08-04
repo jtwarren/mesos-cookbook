@@ -5,7 +5,7 @@
 
 require 'spec_helper'
 
-describe 'mesos::master' do
+describe 'et_mesos::master' do
   deploy_dir = '/usr/local/var/mesos/deploy'
 
   context 'when node[:et_mesos][:master][:zk] is not set' do
@@ -43,8 +43,8 @@ describe 'mesos::master' do
       end.converge described_recipe
     end
 
-    it 'includes mesos::default' do
-      expect(chef_run).to include_recipe 'mesos::default'
+    it 'includes et_mesos::default' do
+      expect(chef_run).to include_recipe 'et_mesos::default'
     end
 
     it 'does nothing to service[mesos-master]' do

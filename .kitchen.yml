@@ -17,7 +17,7 @@ platforms:
 suites:
   - name: mesosphere_master
     run_list:
-      - recipe[mesos::master]
+      - recipe[et_mesos::master]
     attributes:
       mesos:
         type: mesosphere
@@ -38,8 +38,8 @@ suites:
   - name: mesosphere_slave
     run_list:
       # master recipe is only for asserting mesos-slave healthy startup.
-      - recipe[mesos::master]
-      - recipe[mesos::slave]
+      - recipe[et_mesos::master]
+      - recipe[et_mesos::slave]
     attributes:
       mesos:
         type: mesosphere
@@ -64,7 +64,7 @@ suites:
 
   - name: source_master
     run_list:
-      - recipe[mesos::master]
+      - recipe[et_mesos::master]
     attributes:
       mesos:
         type: source
@@ -83,8 +83,8 @@ suites:
   - name: source_slave
     run_list:
       # master recipe is only for asserting mesos-slave healthy startup.
-      - recipe[mesos::master]
-      - recipe[mesos::slave]
+      - recipe[et_mesos::master]
+      - recipe[et_mesos::slave]
     attributes:
       mesos:
         type: source

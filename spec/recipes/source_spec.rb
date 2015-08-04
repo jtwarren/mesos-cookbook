@@ -5,7 +5,7 @@
 
 require 'spec_helper'
 
-describe 'mesos::source' do
+describe 'et_mesos::source' do
   context 'when all attributes are default, on CentOS 6.6' do
     let :chef_run do
       ChefSpec::ServerRunner.new(platform: 'centos', version: '6.6').converge(described_recipe)

@@ -5,7 +5,7 @@
 
 require 'spec_helper'
 
-describe 'mesos::zookeeper' do
+describe 'et_mesos::zookeeper' do
   context 'When all attributes are default, on CentOS 6.6' do
     let(:chef_run) do
       runner = ChefSpec::ServerRunner.new(platform: 'centos', version: '6.6')

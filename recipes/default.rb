@@ -21,4 +21,4 @@ when "ubuntu"
 end
 
 include_recipe "java"
-include_recipe "mesos::#{node[:et_mesos][:type]}"
+include_recipe "et_mesos::#{node[:et_mesos][:type]}"

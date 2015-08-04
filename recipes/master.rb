@@ -3,7 +3,7 @@
 # Recipe:: master
 #
 
-include_recipe "mesos::default"
+include_recipe "et_mesos::default"
 
 service "mesos-master" do
   provider Chef::Provider::Service::Upstart

@@ -21,21 +21,21 @@ Currently this cookbook defaults to build mesos from source, i.e.
 
 ## Recipes
 
-### mesos::default
+### et_mesos::default
 
 Install mesos using `source` recipe or `mesosphere` recipe, depending
 on what the `node[:et_mesos][:type]` attribute is set to (`source` or `mesosphere`).
 
-### mesos::source
+### et_mesos::source
 
 Install mesos (download zip from [github](https://github.com/apache/mesos), configure, make, make install).
 
-### mesos::mesosphere
+### et_mesos::mesosphere
 
 Install mesos using Mesosphere's mesos package.
 You can also install zookeeper package by `node[:et_mesos][:mesosphere][:with_zookeeper]` if required because Mesosphere's mesos package doesn't include zookeeper.
 
-### mesos::master
+### et_mesos::master
 
 Configure master and cluster deployment configuration files, and start
 `mesos-master`.
@@ -79,7 +79,7 @@ mesos-master --zk=zk://localhost:2181/mesos --port=5050 --log_dir=/var/log/mesos
 
 See the [latest Mesos config docs](http://mesos.apache.org/documentation/latest/configuration/) for available options or the output of `mesos-master --help`.
 
-### mesos::slave
+### et_mesos::slave
 
 Configure slave configuration files, and start `mesos-slave`.
 
@@ -118,7 +118,7 @@ mesos-slave --master=zk://localhost:2181/mesos --log_dir=/var/log/mesos --contai
 
 See the [latest Mesos config docs](http://mesos.apache.org/documentation/latest/configuration/) for available options or the output of `mesos-slave --help`.
 
-### [Deprecated] mesos::docker-executor
+### [Deprecated] et_mesos::docker-executor
 
 Install [mesos-docker executor](https://github.com/mesosphere/mesos-docker).
 Currently only Mesos 0.14.0 is supported.
@@ -128,7 +128,7 @@ So, you need to install docker manually.
 
 ## Usage
 
-Wrap this cookbook, setting the `node[:et_mesos][:type]` attribute as appropriate for your installation, and `include_recipe 'mesos::master'` or `include_recipe 'mesos::slave'`, depending on what part of the cluster you need to provision.
+Wrap this cookbook, setting the `node[:et_mesos][:type]` attribute as appropriate for your installation, and `include_recipe 'et_mesos::master'` or `include_recipe 'et_mesos::slave'`, depending on what part of the cluster you need to provision.
 
 The recommendation would be to have two wrapper cookbooks, one for the master(s), and another for your slave(s).
 

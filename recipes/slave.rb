@@ -3,7 +3,7 @@
 # Recipe:: slave
 #
 
-include_recipe "mesos::default"
+include_recipe "et_mesos::default"
 
 service "mesos-slave" do
   provider Chef::Provider::Service::Upstart

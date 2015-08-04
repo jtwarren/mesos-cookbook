@@ -5,7 +5,7 @@
 
 require 'spec_helper'
 
-describe 'mesos::default' do
+describe 'et_mesos::default' do
   context 'when platform is neither `ubuntu` nor `centos`' do
     let :chef_run do
       ChefSpec::ServerRunner.new(platform: 'debian', version: '7.0').converge described_recipe
@@ -45,7 +45,7 @@ describe 'mesos::default' do
     %w(
       apt
       java
-      mesos::source
+      et_mesos::source
     ).each do |r|
       it "includes the #{r} recipe" do
         expect(chef_run).to include_recipe r
@@ -61,7 +61,7 @@ describe 'mesos::default' do
     end
 
     it 'includes the mesosphere recipe' do
-      expect(chef_run).to include_recipe 'mesos::mesosphere'
+      expect(chef_run).to include_recipe 'et_mesos::mesosphere'
     end
   end
 end

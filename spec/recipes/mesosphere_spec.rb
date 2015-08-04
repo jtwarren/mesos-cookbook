@@ -5,7 +5,7 @@
 
 require 'spec_helper'
 
-describe 'mesos::mesosphere' do
+describe 'et_mesos::mesosphere' do
   context 'when all attributes are default, on CentOS 6.6' do
     let(:chef_run) do
       runner = ChefSpec::ServerRunner.new(platform: 'centos', version: '6.6')
@@ -43,8 +43,8 @@ describe 'mesos::mesosphere' do
       end.converge described_recipe
     end
 
-    it 'includes mesos::zookeeper' do
-      expect(chef_run).to include_recipe 'mesos::zookeeper'
+    it 'includes et_mesos::zookeeper' do
+      expect(chef_run).to include_recipe 'et_mesos::zookeeper'
     end
   end
 
