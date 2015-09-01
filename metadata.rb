@@ -14,7 +14,6 @@ recipe           'et_mesos::mesosphere', 'install mesos from mesosphere package.
 recipe           'et_mesos::source', 'install mesos from source(default recipe).'
 recipe           'et_mesos::master',  'configure the machine as master.'
 recipe           'et_mesos::slave',   'configure the machine as slave.'
-recipe           'et_mesos::docker-executor', 'install mesos-docker executor'
 
 depends          'java'
 depends          'python'

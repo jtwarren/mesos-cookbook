@@ -118,14 +118,6 @@ mesos-slave --master=zk://localhost:2181/mesos --log_dir=/var/log/mesos --contai
 
 See the [latest Mesos config docs](http://mesos.apache.org/documentation/latest/configuration/) for available options or the output of `mesos-slave --help`.
 
-### [Deprecated] et_mesos::docker-executor
-
-Install [mesos-docker executor](https://github.com/mesosphere/mesos-docker).
-Currently only Mesos 0.14.0 is supported.
-
-__NOTE__: This cookbook DOES NOT install `docker` automatically.
-So, you need to install docker manually.
-
 ## Usage
 
 Wrap this cookbook, setting the `node[:et_mesos][:type]` attribute as appropriate for your installation, and `include_recipe 'et_mesos::master'` or `include_recipe 'et_mesos::slave'`, depending on what part of the cluster you need to provision.
