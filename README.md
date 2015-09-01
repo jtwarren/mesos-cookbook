@@ -40,14 +40,10 @@ You can also install zookeeper package by `node[:et_mesos][:mesosphere][:with_zo
 Configure master and cluster deployment configuration files, and start
 `mesos-master`.
 
-* `node[:et_mesos][:prefix]/var/mesos/deploy/masters`
-* `node[:et_mesos][:prefix]/var/mesos/deploy/slaves`
-* `node[:et_mesos][:prefix]/var/mesos/deploy/mesos-deploy-env.sh`
-* `node[:et_mesos][:prefix]/var/mesos/deploy/mesos-master-env.sh`
-
-If you choose `mesosphere` as `node[:et_mesos][:type]`, the `node[:et_mesos][:prefix]` attribute
-will be overridden to `/usr/local`, which is because the package from Mesosphere
-installs mesos into that directory.
+* `node[:et_mesos][:deploy_dir]/masters`
+* `node[:et_mesos][:deploy_dir]/slaves`
+* `node[:et_mesos][:deploy_dir]/mesos-deploy-env.sh`
+* `node[:et_mesos][:deploy_dir]/mesos-master-env.sh`
 
 Furthermore, this recipe will also configure upstart configuration files.
 
@@ -83,11 +79,7 @@ See the [latest Mesos config docs](http://mesos.apache.org/documentation/latest/
 
 Configure slave configuration files, and start `mesos-slave`.
 
-* `node[:et_mesos][:prefix]/var/mesos/deploy/mesos-slave-env.sh`
-
-If you choose `mesosphere` as `node[:et_mesos][:type]`, the `node[:et_mesos][:prefix]` attribute
-will be overridden to `/usr/local`, which is because the package from Mesosphere
-installs mesos into that directory by default.
+* `node[:et_mesos][:deploy_dir]/mesos-slave-env.sh`
 
 Furthermore, this recipe also configures upstart configuration files.
 
