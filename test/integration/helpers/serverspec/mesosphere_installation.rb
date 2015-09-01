@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 shared_examples_for 'an installation from mesosphere' do |opt|
-  if(opt[:with_zookeeper])
+  if opt[:with_zookeeper]
     context 'with zookeeper' do
       it 'installs Zookeeper packages' do
         puts "The OS family is #{os[:family]}"

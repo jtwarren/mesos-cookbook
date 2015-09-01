@@ -8,38 +8,38 @@ require 'spec_helper'
 describe 'et_mesos::master' do
   deploy_dir = '/usr/local/var/mesos/deploy'
 
-  context 'when node[:et_mesos][:master][:zk] is not set' do
+  context "when node['et_mesos']['master']['zk'] is not set" do
     let(:chef_run) { ChefSpec::ServerRunner.new.converge described_recipe }
 
     it 'exits the Chef run' do
       expect { chef_run }.to raise_error.with_message(
-        'node[:et_mesos][:master][:zk] is required to configure mesos-master.'
+        "node['et_mesos']['master']['zk'] is required to configure mesos-master."
       )
     end
   end
 
-  context 'when node[:et_mesos][:master][:zk] is set, but node[:et_mesos][:master][:zk] is not set' do
+  context "when node['et_mesos']['master']['zk'] is set, but node['et_mesos']['master']['zk'] is not set" do
     let :chef_run do
       ChefSpec::ServerRunner.new do |node|
-        node.set[:et_mesos][:master][:zk] = 'zk-string'
+        node.set['et_mesos']['master']['zk'] = 'zk-string'
       end.converge described_recipe
     end
 
     it 'exits the Chef run' do
       expect { chef_run }.to raise_error.with_message(
-        'node[:et_mesos][:master][:quorum] is required to configure mesos-master.'
+        "node['et_mesos']['master']['quorum'] is required to configure mesos-master."
       )
     end
   end
 
   context(
-    'when node[:et_mesos][:master][:zk] & node[:et_mesos][:master][:quorum] are set, ' \
+    "when node['et_mesos']['master']['zk'] & node['et_mesos']['master']['quorum'] are set, " \
     'but all other attributes are default, on Ubuntu 14.04'
   ) do
     let(:chef_run) do
       ChefSpec::ServerRunner.new do |node|
-        node.set[:et_mesos][:master][:zk] = 'zk-string'
-        node.set[:et_mesos][:master][:quorum] = '1'
+        node.set['et_mesos']['master']['zk'] = 'zk-string'
+        node.set['et_mesos']['master']['quorum'] = '1'
       end.converge described_recipe
     end
 
@@ -135,31 +135,31 @@ describe 'et_mesos::master' do
     let :chef_run do
       ChefSpec::ServerRunner.new do |node|
         # These attributes are set to avoid failing the Chef run
-        node.set[:et_mesos][:master][:zk] = 'zk-string'
-        node.set[:et_mesos][:master][:quorum] = '1'
-        node.set[:et_mesos][:master_ips] = %w(10.0.0.1)
-        node.set[:et_mesos][:slave_ips] = %w(10.0.0.4)
+        node.set['et_mesos']['master']['zk'] = 'zk-string'
+        node.set['et_mesos']['master']['quorum'] = '1'
+        node.set['et_mesos']['master_ips'] = %w(10.0.0.1)
+        node.set['et_mesos']['slave_ips'] = %w(10.0.0.4)
       end.converge described_recipe
     end
 
     it 'has a masters config with supplied IPs' do
       expect(chef_run).to render_file("#{deploy_dir}/masters")
-        .with_content %r{^10.0.0.1$}
+        .with_content(/^10.0.0.1$/)
     end
 
     it 'has a slaves config with supplied IPs' do
       expect(chef_run).to render_file("#{deploy_dir}/slaves")
-        .with_content %r{^10.0.0.4$}
+        .with_content(/^10.0.0.4$/)
     end
   end
 
-  context 'when node[:et_mesos][:type] == mesosphere, on Ubuntu 14.04' do
+  context "when node['et_mesos']['type'] == mesosphere, on Ubuntu 14.04" do
     let :chef_run do
       ChefSpec::ServerRunner.new do |node|
-        node.set[:et_mesos][:type] = 'mesosphere'
-        node.set[:et_mesos][:master][:zk] = 'zk-string'
-        node.set[:et_mesos][:master][:quorum] = '1'
-        node.set[:et_mesos][:master][:fake_key] = 'fake_value'
+        node.set['et_mesos']['type'] = 'mesosphere'
+        node.set['et_mesos']['master']['zk'] = 'zk-string'
+        node.set['et_mesos']['master']['quorum'] = '1'
+        node.set['et_mesos']['master']['fake_key'] = 'fake_value'
       end.converge(described_recipe)
     end
 
@@ -184,7 +184,7 @@ describe 'et_mesos::master' do
       end
 
       it 'contains LOGS variable' do
-        expect(chef_run).to render_file('/etc/default/mesos').with_content(/^LOGS=\/var\/log\/mesos$/)
+        expect(chef_run).to render_file('/etc/default/mesos').with_content(%r{^LOGS=/var/log/mesos$})
       end
     end
 
@@ -208,7 +208,7 @@ describe 'et_mesos::master' do
     end
 
     describe 'configuration files in /etc/mesos-master' do
-      it 'sets the content of the file matching a key in node[:et_mesos][:master] to its corresponding value' do
+      it "sets the content of the file matching a key in node['et_mesos']['master'] to its corresponding value" do
         expect(chef_run).to render_file('/etc/mesos-master/quorum')
           .with_content(/^1$/)
 

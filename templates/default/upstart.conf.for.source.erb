@@ -10,7 +10,7 @@ respawn
 #   mesos-daemon.sh is not suitable
 #   because it uses 'nohup' for spawning mesos-<%= @role %>
 script
-  prefix=<%= node[:et_mesos][:prefix] %>
+  prefix=<%= node['et_mesos']['prefix'] %>
   role=<%= @role %> # 'master' or 'slave'
   exec_prefix=${prefix}
   deploy_dir=${prefix}/var/mesos/deploy

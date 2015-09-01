@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'et_mesos::master' do
-  it_behaves_like 'an installation from mesosphere', {:with_zookeeper => true}
+  it_behaves_like 'an installation from mesosphere', with_zookeeper: true
 
   it_behaves_like 'a master node'
 
@@ -27,7 +27,7 @@ describe 'et_mesos::master' do
       end
 
       it 'contains configured zk string' do
-        expect(zk_file.content).to match /^zk:\/\/localhost:2181\/mesos$/
+        expect(zk_file.content).to match(%r{^zk://localhost:2181/mesos$})
       end
     end
 
@@ -41,11 +41,11 @@ describe 'et_mesos::master' do
       end
 
       it 'contains LOGS variable' do
-        expect(mesos_file.content).to match /^LOGS=\/var\/log\/mesos$/
+        expect(mesos_file.content).to match(%r{^LOGS=/var/log/mesos$})
       end
 
       it 'contains ULIMIT variable' do
-        expect(mesos_file.content).to match /^ULIMIT="-n 8192"$/
+        expect(mesos_file.content).to match(/^ULIMIT="-n 8192"$/)
       end
     end
 
@@ -59,11 +59,11 @@ describe 'et_mesos::master' do
       end
 
       it 'contains PORT variable' do
-        expect(master_file.content).to match /^PORT=5050$/
+        expect(master_file.content).to match(/^PORT=5050$/)
       end
 
       it 'contains ZK variable' do
-        expect(master_file.content).to match /^ZK=`cat \/etc\/mesos\/zk`$/
+        expect(master_file.content).to match(%r{^ZK=`cat /etc/mesos/zk`$})
       end
     end
 

@@ -11,8 +11,8 @@
   include_recipe r
 end
 
-case node["platform"]
-when "centos"
+case node['platform']
+when 'centos'
   repo_url = value_for_platform(
     'centos' => {
       'default' => 'http://opensource.wandisco.com/centos/6/svn-1.8/RPMS/$basearch/',
@@ -36,7 +36,7 @@ when "centos"
     subversion-devel
     apr-util-devel
   )
-when "ubuntu"
+when 'ubuntu'
   pkgs = %w(
     unzip
     libtool
@@ -52,35 +52,35 @@ pkgs.each do |pkg|
   package pkg
 end
 
-mesos_version = node[:et_mesos][:version]
-prefix = node[:et_mesos][:prefix]
+mesos_version = node['et_mesos']['version']
+prefix = node['et_mesos']['prefix']
 bin = "#{prefix}/sbin/mesos-master"
-cmd = "#{bin} --version |cut -f 2 -d ' '"
+cmd = Mixlib::ShellOut.new("#{bin} --version |cut -f 2 -d ' '")
 
-unless File.exist?(bin) && (`#{cmd}`.chop == mesos_version)
+unless File.exist?(bin) && cmd.run_command && (cmd.stdout.chop == mesos_version)
   remote_file "#{Chef::Config[:file_cache_path]}/mesos-#{mesos_version}.zip" do
     source "https://github.com/apache/mesos/archive/#{mesos_version}.zip"
   end
 
-  execute "extract mesos to #{node[:et_mesos][:home]}" do
-    cwd    "#{node[:et_mesos][:home]}"
+  execute "extract mesos to #{node['et_mesos']['home']}" do
+    cwd     node['et_mesos']['home']
     command "unzip -o #{Chef::Config[:file_cache_path]}/mesos-#{mesos_version}.zip -d ./" \
              " && mv mesos-#{mesos_version} mesos"
   end
 
   execute 'build mesos from source' do
-    cwd     "#{node[:et_mesos][:home]}/mesos"
+    cwd     "#{node['et_mesos']['home']}/mesos"
     command "./bootstrap && mkdir -p build && cd build && ../configure --prefix=#{prefix} && make"
   end
 
   execute 'test mesos' do
-    cwd     "#{node[:et_mesos][:home]}/mesos/build"
+    cwd     "#{node['et_mesos']['home']}/mesos/build"
     command 'make check'
-    not_if  { node[:et_mesos][:build][:skip_test] }
+    not_if  { node['et_mesos']['build']['skip_test'] }
   end
 
   execute "install mesos to #{prefix}" do
-    cwd     "#{node[:et_mesos][:home]}/mesos/build"
+    cwd     "#{node['et_mesos']['home']}/mesos/build"
     command 'make install && ldconfig'
   end
 end

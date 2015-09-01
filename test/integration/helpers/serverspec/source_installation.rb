@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 shared_examples_for 'an installation from source' do
-
   context 'installation into /usr/local' do
     shared_examples_for 'an install directory' do
       let :directory do
@@ -53,7 +52,9 @@ shared_examples_for 'an installation from source' do
       lib_directory_path = '/usr/local/lib'
 
       expect(file(File.join(lib_directory_path, 'libmesos.so'))).to be_a_file
-      expect(file(File.join(lib_directory_path, 'libmesos.so'))).to be_linked_to 'libmesos-0.22.1.so'
+      expect(file(File.join(lib_directory_path, 'libmesos.so'))).to(
+        be_linked_to 'libmesos-0.22.1.so'
+      )
       expect(file(File.join(lib_directory_path, 'libmesos.la'))).to be_a_file
     end
 
@@ -65,7 +66,7 @@ shared_examples_for 'an installation from source' do
   end
 
   context 'files in /usr/local/bin' do
-    %w[mesos mesos-execute mesos-local mesos-log mesos-ps mesos-resolve].each do |bin_script|
+    %w(mesos mesos-execute mesos-local mesos-log mesos-ps mesos-resolve).each do |bin_script|
       it "creates bin/#{bin_script}" do
         expect(file("/usr/local/bin/#{bin_script}")).to be_a_file
         expect(file("/usr/local/bin/#{bin_script}")).to be_owned_by('root')
@@ -98,7 +99,7 @@ shared_examples_for 'an installation from source' do
 
     context 'each bin script' do
       let :expected_scripts do
-        %w[
+        %w(
           mesos-daemon.sh
           mesos-master
           mesos-slave
@@ -108,7 +109,7 @@ shared_examples_for 'an installation from source' do
           mesos-stop-cluster.sh
           mesos-stop-masters.sh
           mesos-stop-slaves.sh
-        ].map { |script| "/usr/local/sbin/#{script}" }
+        ).map { |script| "/usr/local/sbin/#{script}" }
       end
 
       it 'exists' do

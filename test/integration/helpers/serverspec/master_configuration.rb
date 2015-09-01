@@ -43,7 +43,9 @@ shared_examples_for 'a master node' do
     end
 
     it 'contains SSH_OPTS variable' do
-      expect(deploy_env_file.content).to match(/^export SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=2"$/)
+      expect(deploy_env_file.content).to(
+        match(/^export SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=2"$/)
+      )
     end
 
     it 'contains DEPLOY_WITH_SUDO variable' do

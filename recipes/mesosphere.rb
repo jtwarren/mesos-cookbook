@@ -3,10 +3,10 @@
 # Recipe:: mesosphere
 #
 
-include_recipe 'et_mesos::zookeeper' if node[:et_mesos][:mesosphere][:with_zookeeper]
+include_recipe 'et_mesos::zookeeper' if node['et_mesos']['mesosphere']['with_zookeeper']
 
 case node['platform']
-when "centos"
+when 'centos'
   repo_url = value_for_platform(
     'centos' => {
       'default' => 'http://repos.mesosphere.io/el/6',
@@ -37,7 +37,7 @@ when "centos"
     end
   end
 
-  yum_package "mesos >= #{node[:et_mesos][:version]}"
+  yum_package "mesos >= #{node['et_mesos']['version']}"
 when 'ubuntu'
   apt_repository 'mesosphere' do
     uri "http://repos.mesosphere.com/#{node['platform']}"
@@ -46,7 +46,8 @@ when 'ubuntu'
     key 'E56151BF'
   end
 
-  package "mesos" do
-    version "#{node[:et_mesos][:version]}-1.0.#{node['platform']}#{node['platform_version'].sub '.', ''}"
+  package 'mesos' do
+    version "#{node['et_mesos']['version']}-" \
+            "1.0.#{node['platform']}#{node['platform_version'].sub '.', ''}"
   end
 end

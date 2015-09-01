@@ -90,10 +90,10 @@ describe 'et_mesos::source' do
     end
   end
 
-  context 'when node[:et_mesos][:build][:skip_test] == false, on Ubuntu 14.04' do
+  context "when node['et_mesos']['build']['skip_test'] == false, on Ubuntu 14.04" do
     let :chef_run do
       ChefSpec::ServerRunner.new do |node|
-        node.set[:et_mesos][:build][:skip_test] = false
+        node.set['et_mesos']['build']['skip_test'] = false
       end.converge described_recipe
     end
 

@@ -29,12 +29,12 @@ describe 'et_mesos::zookeeper' do
       end
     end
 
-    it "executes the zookeeper service init or returns true" do
-      expect(chef_run).to run_execute "service zookeeper-server init || true"
+    it 'executes the zookeeper service init or returns true' do
+      expect(chef_run).to run_execute 'service zookeeper-server init || true'
     end
 
-    it "restarts zookeeper" do
-      expect(chef_run).to restart_service("zookeeper-server").with(
+    it 'restarts zookeeper' do
+      expect(chef_run).to restart_service('zookeeper-server').with(
         provider: Chef::Provider::Service::Init
       )
     end

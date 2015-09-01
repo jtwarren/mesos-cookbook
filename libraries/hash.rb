@@ -1,5 +1,4 @@
 class Hash
-  # rubocop:disable LineLength
   def to_path_hash(separator = nil)
     paths.map do |pathname|
       {
@@ -8,7 +7,6 @@ class Hash
       }
     end
   end
-  # rubocop:enable LineLength
 
   private
 
