@@ -28,12 +28,12 @@ on what the `node[:et_mesos][:type]` attribute is set to (`source` or `mesospher
 
 ### et_mesos::source
 
-Install mesos (download zip from [github](https://github.com/apache/mesos), configure, make, make install).
+Build and install Mesos from source (downloads from [GitHub](https://github.com/apache/mesos), configure, make, make install).
 
 ### et_mesos::mesosphere
 
-Install mesos using Mesosphere's mesos package.
-You can also install zookeeper package by `node[:et_mesos][:mesosphere][:with_zookeeper]` if required because Mesosphere's mesos package doesn't include zookeeper.
+Install Mesos using Mesosphere's `mesos` package.
+You can also install `zookeeper` package by `node[:et_mesos][:mesosphere][:with_zookeeper]` if required because Mesosphere's Mesos package doesn't include ZooKeeper.
 
 ### et_mesos::master
 
