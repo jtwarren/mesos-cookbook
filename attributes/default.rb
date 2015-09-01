@@ -1,5 +1,5 @@
 default['et_mesos']['type']             = 'source'
-default['et_mesos']['version']          = '0.22.1'
+default['et_mesos']['version']          = '0.23.0'
 default['et_mesos']['prefix']           = '/usr/local'
 default['et_mesos']['home']             = '/opt'
 default['et_mesos']['ssh_opts']         = '-o StrictHostKeyChecking=no ' \

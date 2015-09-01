@@ -36,7 +36,7 @@ attribute       'et_mesos/version',
   recipes:      ['et_mesos::source', 'et_mesos::mesosphere'],
   display_name: 'Version to be installed.',
   description:  "branch name or tag name at http://github.com/apache/mesos, or mesos's version name",
-  default:      '0.22.1'
+  default:      '0.23.0'
 
 attribute       'et_mesos/mesosphere/with_zookeeper',
   recipes:      ['et_mesos::mesosphere'],
