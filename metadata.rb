@@ -26,61 +26,60 @@ depends          'yum'
 suggests         'docker'
 suggests         'zookeeper'
 
-attribute       'mesos/type',
+attribute       'et_mesos/type',
   recipes:      ['et_mesos::source', 'et_mesos::mesosphere', 'et_mesos::master', 'et_mesos::slave'],
   display_name: 'installation type',
   description:  "Value should be 'source' | 'mesosphere'.",
   default:      'source'
 
-attribute       'mesos/version',
+attribute       'et_mesos/version',
   recipes:      ['et_mesos::source', 'et_mesos::mesosphere'],
   display_name: 'Version to be installed.',
   description:  "branch name or tag name at http://github.com/apache/mesos, or mesos's version name",
   default:      '0.22.1'
 
-attribute       'mesos/mesosphere/with_zookeeper',
+attribute       'et_mesos/mesosphere/with_zookeeper',
   recipes:      ['et_mesos::mesosphere'],
   display_name: 'switch for installing zookeeper packages',
   description:  "if true, zookeeper packages will be installed with mesosphere's mesos package",
   default:      'false'
 
-attribute       'mesos/prefix',
+attribute       'et_mesos/prefix',
   recipes:      ['et_mesos::source', 'et_mesos::master', 'et_mesos::slave'],
   display_name: 'Prefix value to be passed to configure script',
   description:  'prefix value to be passed to configure script',
   default:      '/usr/local'
 
-attribute       'mesos/home',
+attribute       'et_mesos/home',
   recipes:      ['et_mesos::source'],
   display_name: 'mesos home directory',
   description:  'directory which mesos sources are extracted to.',
   default:      '/opt'
 
-attribute       'mesos/build/skip_test',
+attribute       'et_mesos/build/skip_test',
   recipes:      ['et_mesos::source'],
   display_name: 'Flag whether test will be performed.',
   description:  'if true, test will be skipped.',
   default:      'true'
 
-attribute       'mesos/ssh_opts',
+attribute       'et_mesos/ssh_opts',
   recipes:      ['et_mesos::master'],
   display_name: 'ssh options',
   description:  'passed to be mesos-deploy-env.sh',
   default:      '-o StrictHostKeyChecking=no -o ConnectTimeout=2'
 
-attribute       'mesos/deploy_with_sudo',
+attribute       'et_mesos/deploy_with_sudo',
   recipes:      ['et_mesos::master'],
   display_name: 'Flag whether sudo will be used in mesos deploy scripts',
   description:  'Flag whether sudo will be used in mesos deploy scripts',
   default:      '1'
 
-attribute       'mesos/master_ips',
+attribute       'et_mesos/master_ips',
   recipes:      ['et_mesos::master'],
   display_name: 'IP list of masters',
   description:  'used in mesos-start/stop-cluster scripts.'
 
-attribute           'mesos/slave_ips',
-  recipes:          ['et_mesos::master'],
-  display_name:     'IP list of slaves',
-  description:      'used in mesos-start/stop-cluster scripts.'
-
+attribute       'et_mesos/slave_ips',
+  recipes:      ['et_mesos::master'],
+  display_name: 'IP list of slaves',
+  description:  'used in mesos-start/stop-cluster scripts.'
