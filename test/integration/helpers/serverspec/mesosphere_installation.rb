@@ -9,7 +9,7 @@ shared_examples_for 'an installation from mesosphere' do |opt|
         when 'centos', 'redhat'
           pkgs = %w(zookeeper zookeeper-server)
         when 'ubuntu', 'debian'
-          pkgs = %(zookeeper zookeeperd zookeeper-bin)
+          pkgs = %w(zookeeper zookeeperd zookeeper-bin)
         end
 
         pkgs.each do |zk|
