@@ -74,11 +74,6 @@ attribute       'mesos/deploy_with_sudo',
   description:  'Flag whether sudo will be used in mesos deploy scripts',
   default:      '1'
 
-attribute       'mesos/cluster_name',
-  recipes:      ['et_mesos::master'],
-  display_name: 'cluster name',
-  description:  '[OBSOLETE] Human readable name for the cluster, displayed at webui'
-
 attribute       'mesos/master_ips',
   recipes:      ['et_mesos::master'],
   display_name: 'IP list of masters',
@@ -89,10 +84,3 @@ attribute           'mesos/slave_ips',
   display_name:     'IP list of slaves',
   description:      'used in mesos-start/stop-cluster scripts.'
 
-attribute           'mesos/slave/master_url',
-  required:         'required',
-  recipes:          ['et_mesos::slave'],
-  display_name:     'master url',
-  description:      '[OBSOLETE] Use mesos/slave/master.  mesos master url. ' \
-                    'this should  be host:port for non-ZooKeeper based ' \
-                    'masters, otherwise a zk:// or file://.'

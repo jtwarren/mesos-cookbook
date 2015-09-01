@@ -17,20 +17,6 @@ directory deploy_dir do
   recursive true
 end
 
-# for backwards compatibility
-if node['et_mesos']['cluster_name']
-  if node['et_mesos']['master']['cluster']
-    Chef::Log.info "node['et_mesos']['cluster_name'] is obsolete. " \
-                   "node['et_mesos']['cluster_name'] will be ignored because " \
-                   "you have node['et_mesos']['master']['cluster']."
-  else
-    Chef::Log.info "node['et_mesos']['cluster_name'] is obsolete. use " \
-                   "node['et_mesos']['master']['cluster'] instead."
-    node.default['et_mesos']['master']['cluster'] =
-      node['et_mesos']['cluster_name']
-  end
-end
-
 unless node['et_mesos']['master']['zk']
   fail "node['et_mesos']['master']['zk'] is required to configure mesos-master."
 end

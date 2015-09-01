@@ -17,19 +17,6 @@ directory deploy_dir do
   recursive true
 end
 
-# for backword compatibility
-if node['et_mesos']['slave']['master_url']
-  if node['et_mesos']['slave']['master']
-    Chef::Log.info "node['et_mesos']['slave']['master_url'] is obsolete. " \
-                   "node['et_mesos']['slave']['master_url'] will be ignored " \
-                   "because you have node['et_mesos']['slave']['master']."
-  else
-    Chef::Log.info "node['et_mesos']['slave']['master_url'] is obsolete. use " \
-                   "node['et_mesos']['slave']['master'] instead."
-    node.default['et_mesos']['slave']['master'] = node['et_mesos']['slave']['master_url']
-  end
-end
-
 unless node['et_mesos']['slave']['master']
   fail "node['et_mesos']['slave']['master'] is required to configure mesos-slave."
 end
