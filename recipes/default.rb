@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: mesos
+# Cookbook Name:: et_mesos
 # Recipe:: default
 #
 
@@ -9,8 +9,8 @@ unless %w(ubuntu centos).include? node["platform"]
 end
 
 # Fail early if an unsupported install type is specified
-unless %w(source mesosphere).include? node[:et_mesos][:type]
-  fail "node['mesos']['type'] should be 'source' or 'mesosphere'."
+unless %w(source mesosphere).include? node['et_mesos']['type']
+  fail "node['et_mesos']['type'] should be 'source' or 'mesosphere'."
 end
 
 case node["platform"]

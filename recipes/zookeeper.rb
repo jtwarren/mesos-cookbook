@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: mesos
+# Cookbook Name:: et_mesos
 # Recipe:: zookeeper
 #
 
