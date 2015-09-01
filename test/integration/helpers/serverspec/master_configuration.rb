@@ -3,7 +3,7 @@
 shared_examples_for 'a master node' do
   describe 'masters file' do
     let :masters_file do
-      file '/usr/local/var/mesos/deploy/masters'
+      file '/usr/etc/mesos/masters'
     end
 
     it 'creates it' do
@@ -19,7 +19,7 @@ shared_examples_for 'a master node' do
 
   describe 'slaves file' do
     let :slaves_file do
-      file '/usr/local/var/mesos/deploy/slaves'
+      file '/usr/etc/mesos/slaves'
     end
 
     it 'creates it' do
@@ -35,7 +35,7 @@ shared_examples_for 'a master node' do
 
   describe 'deploy env template' do
     let :deploy_env_file do
-      file('/usr/local/var/mesos/deploy/mesos-deploy-env.sh')
+      file '/usr/etc/mesos/mesos-deploy-env.sh'
     end
 
     it 'creates it in deploy directory' do
@@ -55,7 +55,7 @@ shared_examples_for 'a master node' do
 
   describe 'master env template' do
     let :master_env_file do
-      file('/usr/local/var/mesos/deploy/mesos-master-env.sh')
+      file '/usr/etc/mesos/mesos-master-env.sh'
     end
 
     it 'creates it in deploy directory' do

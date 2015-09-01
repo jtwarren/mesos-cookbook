@@ -3,7 +3,7 @@
 shared_examples_for 'a slave node' do
   describe 'deploy env template' do
     let :deploy_env_file do
-      file('/usr/local/var/mesos/deploy/mesos-deploy-env.sh')
+      file '/usr/etc/mesos/mesos-deploy-env.sh'
     end
 
     it 'creates it in deploy directory' do
@@ -23,7 +23,7 @@ shared_examples_for 'a slave node' do
 
   describe 'slave env template' do
     let :slave_env_file do
-      file('/usr/local/var/mesos/deploy/mesos-slave-env.sh')
+      file '/usr/etc/mesos/mesos-slave-env.sh'
     end
 
     it 'exists in deploy directory' do
