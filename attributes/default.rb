@@ -5,8 +5,7 @@ default['et_mesos']['home']             = '/opt'
 default['et_mesos']['ssh_opts']         = '-o StrictHostKeyChecking=no ' \
                                           '-o ConnectTimeout=2'
 default['et_mesos']['deploy_with_sudo'] = '1'
-default['et_mesos']['deploy_dir']       =
-  "#{node['et_mesos']['prefix']}/var/mesos/deploy"
+default['et_mesos']['deploy_dir']       = '/usr/etc/mesos'
 default['et_mesos']['master_ips']       = []
 default['et_mesos']['slave_ips']        = []
 

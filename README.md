@@ -148,7 +148,7 @@ The recommendation would be to have two wrapper cookbooks, one for the master(s)
     <tr>
         <td><tt>[:et_mesos][:prefix]</tt></td>
         <td>String</td>
-        <td>Prefix value to be passed to configure script.  This value will be overridden by <tt>/usr/local</tt> if <tt>node[:et_mesos][:type] == mesosphere</tt>.</td>
+        <td>Prefix value to be passed to configure script for building from source.
         <td><tt>/usr/local</tt></td>
     </tr>
     <tr>
