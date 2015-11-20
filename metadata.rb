@@ -4,7 +4,7 @@ maintainer_email 'devops@evertrue.com'
 license          'MIT'
 description      'Installs/Configures mesos'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '3.0.0'
+version          '3.0.1'
 
 supports         'ubuntu', '>= 14.04'
 supports         'centos', '>= 6.6'
