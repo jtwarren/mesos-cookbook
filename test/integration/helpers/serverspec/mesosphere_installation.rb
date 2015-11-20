@@ -26,4 +26,10 @@ shared_examples_for 'an installation from mesosphere' do |opt|
   it 'installs mesos package' do
     expect(package('mesos')).to be_installed
   end
+
+  describe command('apt-mark showhold mesos') do
+    it 'places a hold on the mesos package' do
+      expect(subject.stdout).to contain('mesos')
+    end
+  end
 end
