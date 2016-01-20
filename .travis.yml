@@ -23,7 +23,6 @@ before_install:
   -in travis_ci_ec2.pem.enc -out ~\/.ssh/travis_ci_ec2.pem -d
 - tar xvf secrets.tar
 - mv .chef ~/.chef
-- mv .ssh/travis_ci_ec2.pem ~/.ssh/travis_ci_ec2.pem
 - echo 'node_name "trubot"' >> ~/.chef/knife.rb
 - chmod 600 ~/.chef/knife.rb ~/.chef/trubot.pem ~/.ssh/travis_ci_ec2.pem
 - chef --version
