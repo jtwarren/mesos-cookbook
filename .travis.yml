@@ -36,5 +36,4 @@ install:
 script:
 - rubocop
 - foodcritic .
-- chef exec rspec
 - kitchen test -d always -c
