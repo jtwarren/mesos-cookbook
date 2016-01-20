@@ -1,7 +1,40 @@
 language: ruby
-bundler_args: --deployment --jobs=3 --retry=3
-cache: bundler
 rvm:
-  - 2.1
+- 2.2
+sudo: required
+cache:
+  directories:
+  - "$HOME/.berkshelf"
+addons:
+  apt:
+    sources:
+    - chef-stable-precise
+    packages:
+    - chefdk
+notifications:
+  slack:
+    secure: Anj43K7idPKAyVkmZagpDzv80A8bPx9zLUKASFacNzHngnl0se9Qxaow5QWMhduCHo5jHN5KsJYG1RdLlaPjfq5YUqzxBBb2dg88MIXGREgg6kmm2XqU7xLr6ihyaxYn0Pd15+ICzI729HMce+Pd7kpmLhtLrbthEl0PlBjZIlA=
+env:
+  global:
+  - secure: Na9p9W12oKtpMcQ/u0aoyGnlt3IjMwM+d0Zq5F0qYY72Vj+b/9Yxlt/Pc6aeYvkb5c6co4ohI1HUYH8ArUzUZjNUyMlOZFBvSzvzOC7FJfnsJvty0hvyGE+lJHDnUv9K8rhgG/4Ni+CDJ1Gpm/WpAfa9cOPpympqeF4vfbAucjo=
+  - secure: Czh3oPv+9+BT+XznZWQ66HBzcP9HvyrscKWHcTtyqGvJwciR0/eT+9vfUQmpeBiuzs1kfNQ5na0OKAtY0U+l5qmShHGS0sXrfgYGzyNE667yUqMTgbHo0n8Dd4FI4BBYScevGIVznncCUN6x9PVFHiA0ieQ+DkfU8JxDh2AOwWk=
+before_install:
+- openssl aes-256-cbc -K $encrypted_d3bcf0ef111d_key -iv $encrypted_d3bcf0ef111d_iv
+  -in travis_ci_ec2.pem.enc -out ~\/.ssh/travis_ci_ec2.pem -d
+- tar xvf secrets.tar
+- mv .chef ~/.chef
+- mv .ssh/travis_ci_ec2.pem ~/.ssh/travis_ci_ec2.pem
+- echo 'node_name "trubot"' >> ~/.chef/knife.rb
+- chmod 600 ~/.chef/knife.rb ~/.chef/trubot.pem ~/.ssh/travis_ci_ec2.pem
+- chef --version
+- eval "$(chef shell-init bash)"
+- rubocop --version
+- foodcritic --version
+install:
+- chef gem install kitchen-ec2
+- berks
 script:
-  - bundle exec rake spec
+- rubocop
+- foodcritic .
+- chef exec rspec
+- kitchen test -d always -c
