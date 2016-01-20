@@ -21,7 +21,6 @@ env:
 before_install:
 - openssl aes-256-cbc -K $encrypted_d3bcf0ef111d_key -iv $encrypted_d3bcf0ef111d_iv
   -in travis_ci_ec2.pem.enc -out ~/.ssh/travis_ci_ec2.pem -d
-- tar xvf secrets.tar
 - mkdir .chef ~/.chef
 - echo 'node_name "trubot"' >> ~/.chef/knife.rb
 - chmod 600 ~/.chef/knife.rb ~/.chef/trubot.pem ~/.ssh/travis_ci_ec2.pem
