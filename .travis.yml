@@ -23,7 +23,7 @@ before_install:
   -in travis_ci_ec2.pem.enc -out ~/.ssh/travis_ci_ec2.pem -d
 - mkdir .chef ~/.chef
 - echo 'node_name "trubot"' >> ~/.chef/knife.rb
-- chmod 600 ~/.chef/knife.rb ~/.chef/trubot.pem ~/.ssh/travis_ci_ec2.pem
+- chmod 600 ~/.chef/knife.rb ~/.ssh/travis_ci_ec2.pem
 - chef --version
 - eval "$(chef shell-init bash)"
 - rubocop --version
