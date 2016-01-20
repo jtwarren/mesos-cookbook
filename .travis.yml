@@ -20,7 +20,7 @@ env:
   - secure: Czh3oPv+9+BT+XznZWQ66HBzcP9HvyrscKWHcTtyqGvJwciR0/eT+9vfUQmpeBiuzs1kfNQ5na0OKAtY0U+l5qmShHGS0sXrfgYGzyNE667yUqMTgbHo0n8Dd4FI4BBYScevGIVznncCUN6x9PVFHiA0ieQ+DkfU8JxDh2AOwWk=
 before_install:
 - openssl aes-256-cbc -K $encrypted_d3bcf0ef111d_key -iv $encrypted_d3bcf0ef111d_iv
-  -in travis_ci_ec2.pem.enc -out ~\/.ssh/travis_ci_ec2.pem -d
+  -in travis_ci_ec2.pem.enc -out ~/.ssh/travis_ci_ec2.pem -d
 - tar xvf secrets.tar
 - mv .chef ~/.chef
 - echo 'node_name "trubot"' >> ~/.chef/knife.rb
