@@ -7,7 +7,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '3.0.1'
 
 supports         'ubuntu', '>= 14.04'
-supports         'centos', '>= 6.6'
+supports         'centos', '>= 6.5'
 
 recipe           'et_mesos::default', 'install mesos.'
 recipe           'et_mesos::mesosphere', 'install mesos from mesosphere package.'
