@@ -23,7 +23,7 @@ platforms:
       image_id: ami-9883c6f2
   - name: centos-6.6
     driver_config:
-      image_id: UNDECIDED
+      image_id: ami-8997afe0
 
 suites:
   - name: mesosphere_master
