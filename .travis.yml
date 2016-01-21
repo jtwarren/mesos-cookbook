@@ -5,12 +5,7 @@ sudo: false
 cache:
   directories:
   - "$HOME/.berkshelf"
-addons:
-  apt:
-    sources:
-    - chef-stable-precise
-    packages:
-    - chefdk
+  - /opt/chefdk
 notifications:
   slack:
     secure: Anj43K7idPKAyVkmZagpDzv80A8bPx9zLUKASFacNzHngnl0se9Qxaow5QWMhduCHo5jHN5KsJYG1RdLlaPjfq5YUqzxBBb2dg88MIXGREgg6kmm2XqU7xLr6ihyaxYn0Pd15+ICzI729HMce+Pd7kpmLhtLrbthEl0PlBjZIlA=
@@ -24,13 +19,15 @@ before_install:
 - mkdir .chef ~/.chef
 - touch ~/.chef/knife.rb
 - chmod 600 ~/.chef/knife.rb ~/.ssh/travis_ci_ec2.pem
+install:
+- curl -L https://www.opscode.com/chef/install.sh | sudo bash -s -- -P chefdk
 - chef --version
 - eval "$(chef shell-init bash)"
-- rubocop --version
-- foodcritic --version
-install:
 - chef gem install kitchen-ec2
 - berks
+before_script:
+- rubocop --version
+- foodcritic --version
 script:
 - rubocop
 - foodcritic .
