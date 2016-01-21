@@ -7,6 +7,9 @@ driver:
   security_group_ids: ['ci-testing']
   instance_type: c3.large
   interface: public
+  tags:
+    Env: testing
+    Type: test
 
 transport:
   ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
@@ -18,9 +21,6 @@ platforms:
   - name: ubuntu-14.04
     driver_config:
       image_id: ami-9883c6f2
-      tags:
-        Name: test-kitchen-et-mesos-ubuntu-1404
-        Env: testing
   - name: centos-6.6
     driver_config:
       image_id: UNDECIDED
