@@ -5,6 +5,7 @@ sudo: required
 cache:
   directories:
   - "$HOME/.berkshelf"
+  - /opt/chefdk
 notifications:
   slack:
     secure: Anj43K7idPKAyVkmZagpDzv80A8bPx9zLUKASFacNzHngnl0se9Qxaow5QWMhduCHo5jHN5KsJYG1RdLlaPjfq5YUqzxBBb2dg88MIXGREgg6kmm2XqU7xLr6ihyaxYn0Pd15+ICzI729HMce+Pd7kpmLhtLrbthEl0PlBjZIlA=
