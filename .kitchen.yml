@@ -27,6 +27,9 @@ platforms:
 
 suites:
   - name: mesosphere_master
+    driver:
+      tags:
+        Name: et_mesos_mesosphere_master
     run_list:
       - recipe[et_mesos::master]
     attributes:
@@ -47,6 +50,9 @@ suites:
           - 10.0.0.6
 
   - name: mesosphere_slave
+    driver:
+      tags:
+        Name: et_mesos_mesosphere_slave
     run_list:
       # master recipe is only for asserting mesos-slave healthy startup.
       - recipe[et_mesos::master]
@@ -74,6 +80,9 @@ suites:
           with_zookeeper: true
 
   - name: source_master
+    driver:
+      tags:
+        Name: et_mesos_source_master
     run_list:
       - recipe[et_mesos::master]
     attributes:
@@ -92,6 +101,9 @@ suites:
           - 10.0.0.6
 
   - name: source_slave
+    driver:
+      tags:
+        Name: et_mesos_source_slave
     run_list:
       # master recipe is only for asserting mesos-slave healthy startup.
       - recipe[et_mesos::master]
