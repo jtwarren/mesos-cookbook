@@ -31,4 +31,6 @@ before_script:
 script:
 - rubocop
 - foodcritic .
-- kitchen test -d always -c
+- kitchen converge -c
+- kitchen verify
+- kitchen destroy
