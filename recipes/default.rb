@@ -4,7 +4,7 @@
 #
 
 # Avoid running on unsupported systems
-unless %w(ubuntu centos).include? node['platform']
+unless %w(ubuntu centos amazon).include? node['platform']
   fail "#{node['platform']} is not supported on #{cookbook_name} cookbook"
 end
 
@@ -15,6 +15,8 @@ end
 
 case node['platform']
 when 'centos'
+  include_recipe 'yum'
+when 'amazon'
   include_recipe 'yum'
 when 'ubuntu'
   include_recipe 'apt'
